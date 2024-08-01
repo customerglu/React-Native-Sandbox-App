@@ -9,6 +9,8 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
+            <meta-data android:name="CUSTOMERGLU_WRITE_KEY"  
+    android:value="0ca6ba1a98132a5bc4024dadc0a8101860a7ed4e" />  
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
