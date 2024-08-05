@@ -4,12 +4,11 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-na
 const ProfileScreen = ({ navigation }) => {
   const handleEditProfile = () => {
     // Navigate to Edit Profile screen
-    navigation.navigate('EditProfile');
   };
 
   const handleLogout = () => {
     // Implement logout functionality here
-    Alert.alert('Logged out', 'You have been logged out successfully.');
+    navigation.replace('Home');
   };
 
   return (

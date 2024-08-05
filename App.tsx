@@ -51,6 +51,7 @@ const Stack = createNativeStackNavigator();
 import {PermissionsAndroid} from 'react-native';
 
 import messaging from '@react-native-firebase/messaging';
+import ProfileScreen from './src/screen/AccountScreen';
 async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
   const enabled =
@@ -115,86 +116,10 @@ function App(): React.JSX.Element {
 //     }
 // };
 
-    const { Rncustomerglu } = NativeModules;
-        const RncustomergluManagerEmitter = new NativeEventEmitter(Rncustomerglu);
+   
+        
 
-        const eventanalytics = RncustomergluManagerEmitter.addListener(
-            'CUSTOMERGLU_ANALYTICS_EVENT',
-            (reminder) => 
-            console.log('CUSTOMERGLU_ANALYTICS_EVENT...', reminder)
-        );
-
-        const CG_UNI_DEEPLINK_EVENT = RncustomergluManagerEmitter.addListener(
-            'CG_UNI_DEEPLINK_EVENT',
-            (reminder) => 
-            console.log('CG_UNI_DEEPLINK_EVENT...', reminder)
-        );
-
-        const eventdeeplink = RncustomergluManagerEmitter.addListener(
-            'CUSTOMERGLU_DEEPLINK_EVENT',
-            (reminder) => 
-            {
-                if (Platform.OS === 'ios') {
-                    reminder = reminder.data
-                }
-                 console.log('CUSTOMERGLU_DEEPLINK_EVENT...Handle your Redirection logic',  reminder)
-                if(reminder && reminder.campaignId){
-                loadCampaignById(reminder.campaignId,)
-                }
-            }
-            
-        );
-        const eventbanner = RncustomergluManagerEmitter.addListener(
-            'CUSTOMERGLU_BANNER_LOADED',
-            (reminder) => 
-            console.log('CUSTOMERGLU_BANNER_LOADED...>>>>>', reminder)
-        );
-
-        const invalidCampid = RncustomergluManagerEmitter.addListener(
-            'CG_INVALID_CAMPAIGN_ID',
-            (reminder) => 
-            console.log('CG_INVALID_CAMPAIGN_ID...>>>>>', reminder)
-        );
-        let eventfheight = null,EmbedBannerHeight=null
-        if (Platform.OS === 'ios') {
-            eventfheight = RncustomergluManagerEmitter.addListener(
-                'CGBANNER_FINAL_HEIGHT',
-                (reminder) => {
-                    console.log('reminder----', reminder);
-                    // console.log('reminder["entry1"]....', reminder["entry1"])
-                    if (reminder && reminder["demo-quiz-banner1"]) {
-
-                    }
-
-                }
-
-            );
-            EmbedBannerHeight = RncustomergluManagerEmitter.addListener(
-                'CGEMBED_FINAL_HEIGHT',
-                (reminder) => {
-                    console.log('reminder----', reminder);
-                    // console.log('reminder["embedded1"]....', reminder["embedded1"])
-                    if (reminder && reminder["embedded1"]) {
-                    }
-
-                }
-
-            );
-        }
-
-        return () => {
-            eventanalytics.remove();
-            eventdeeplink.remove();
-            eventbanner.remove();
-            invalidCampid.remove()
-            CG_UNI_DEEPLINK_EVENT.remove()
-            if (Platform.OS === 'ios') {
-                console.log('destroy.!!!!!!!!')
-                
-
-            }
-
-        }
+      
 
 
 
@@ -208,6 +133,11 @@ function App(): React.JSX.Element {
         <Stack.Screen
             name="Home"
             component={HomeScreen}
+            options={{ title: 'SplashScreen', headerShown: false }}
+        />
+          <Stack.Screen
+            name="Profile"
+            component={ProfileScreen}
             options={{ title: 'SplashScreen', headerShown: false }}
         />
          <Stack.Screen

@@ -36,12 +36,94 @@ const HomeScreen = () => {
 
    enableCGAnalytic()
 
-    return () => {
-    //  eventanalytics.remove();
-     // eventdeeplink.remove();
-    
 
-  }
+   const { Rncustomerglu } = NativeModules;
+   const RncustomergluManagerEmitter = new NativeEventEmitter(Rncustomerglu);
+
+   const eventanalytics = RncustomergluManagerEmitter.addListener(
+       'CUSTOMERGLU_ANALYTICS_EVENT',
+       (reminder) => 
+       console.log('CUSTOMERGLU_ANALYTICS_EVENT...', reminder)
+   );
+
+   const CG_UNI_DEEPLINK_EVENT = RncustomergluManagerEmitter.addListener(
+       'CG_UNI_DEEPLINK_EVENT',
+       (reminder) => 
+       console.log('CG_UNI_DEEPLINK_EVENT...', reminder)
+   );
+
+   const eventdeeplink = RncustomergluManagerEmitter.addListener(
+       'CUSTOMERGLU_DEEPLINK_EVENT',
+       (reminder) => 
+       {
+           if (Platform.OS === 'ios') {
+               reminder = reminder.data
+           }
+            console.log('CUSTOMERGLU_DEEPLINK_EVENT...Handle your Redirection logic',  reminder)
+            navigation.navigate("Profile")
+          //  if(reminder && reminder.campaignId){
+          //  loadCampaignById(reminder.campaignId,)
+          //  }
+       }
+       
+   );
+   const eventbanner = RncustomergluManagerEmitter.addListener(
+       'CUSTOMERGLU_BANNER_LOADED',
+       (reminder) => 
+       console.log('CUSTOMERGLU_BANNER_LOADED...>>>>>', reminder)
+   );
+
+   const invalidCampid = RncustomergluManagerEmitter.addListener(
+       'CG_INVALID_CAMPAIGN_ID',
+       (reminder) => 
+       console.log('CG_INVALID_CAMPAIGN_ID...>>>>>', reminder)
+   );
+   let eventfheight = null,EmbedBannerHeight=null
+   if (Platform.OS === 'ios') {
+       eventfheight = RncustomergluManagerEmitter.addListener(
+           'CGBANNER_FINAL_HEIGHT',
+           (reminder) => {
+               console.log('reminder----', reminder);
+               // console.log('reminder["entry1"]....', reminder["entry1"])
+               if (reminder && reminder["demo-quiz-banner1"]) {
+
+               }
+
+           }
+
+       );
+       EmbedBannerHeight = RncustomergluManagerEmitter.addListener(
+           'CGEMBED_FINAL_HEIGHT',
+           (reminder) => {
+               console.log('reminder----', reminder);
+               // console.log('reminder["embedded1"]....', reminder["embedded1"])
+               if (reminder && reminder["embedded1"]) {
+               }
+
+           }
+
+       );
+      }
+
+
+   return () => {
+    eventanalytics.remove();
+    eventdeeplink.remove();
+    eventbanner.remove();
+    invalidCampid.remove()
+    CG_UNI_DEEPLINK_EVENT.remove()
+    if (Platform.OS === 'ios') {
+        console.log('destroy.!!!!!!!!')
+        
+
+    }
+
+}
+
+
+
+
+    
 
 
   }, []);
@@ -85,7 +167,16 @@ const HomeScreen = () => {
               {/* Full-width image */}
               <TouchableOpacity
               onPress={() => {
-                loadCGCampaign("95a73837-ab21-493d-85f6-d7a6ac3ec5ff")
+                let nudgeConfigurationData = {
+                  nudgeConfiguration:{
+                       layout:'full-default',
+                       opacity:'0.8',
+                       closeOnDeepLink:true,
+                       absoluteHeight:'50',
+                       relativeHeight:'60'
+                  },
+              };
+                loadCGCampaign("95a73837-ab21-493d-85f6-d7a6ac3ec5ff",nudgeConfigurationData)
               }}>
               <Image
                 source={{ uri: "https://assets.customerglu.com/demo/nudges/banner-2.png" }} // Replace with your image URL

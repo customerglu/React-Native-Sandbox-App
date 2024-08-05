@@ -132,7 +132,7 @@ const RegisterScreen = ({ navigation }) => {
         // Send registration data in Object     
          allowAnonymousRegistration(false)
         setanimation(!animating)
-        if (token) {
+       // if (token) {
            
             try {
                 gluSDKDebuggingMode(true);
@@ -145,12 +145,12 @@ const RegisterScreen = ({ navigation }) => {
             catch (e) {
                 console.log('e:' + e);
             }
-        }
-        else {
-            if (!token) alert('Fcm Not Conneted!...')
-            if (!userid) alert('please Enter User Id')
+     //   }
+        // else {
+        //     if (!token) alert('Fcm Not Conneted!...')
+        //     if (!userid) alert('please Enter User Id')
 
-        }
+        // }
 
 
         // call register method here
