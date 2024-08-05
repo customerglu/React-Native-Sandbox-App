@@ -18,7 +18,7 @@ import ProductCard from "../components/ProductCard";
 import data from "../data/data.json";
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { loadCGCampaign, registerUser, setCGScreenName } from "../customerglu/CGManger"
+import { loadCGCampaign, enableCGAnalytic, setCGScreenName } from "../customerglu/CGManger"
 
 const HomeScreen = () => {
   const [products, setProducts] = useState(data.products);
@@ -32,9 +32,9 @@ const HomeScreen = () => {
   useEffect(() => {
     // Call registerUser when the component mounts
     // pass your userId
-    registerUser("glutest-78");
+   // registerUser("glutest-78");
 
-   
+   enableCGAnalytic()
 
     return () => {
     //  eventanalytics.remove();
@@ -85,7 +85,7 @@ const HomeScreen = () => {
               {/* Full-width image */}
               <TouchableOpacity
               onPress={() => {
-                loadCGCampaign("cf33fc67-e527-4d25-8c4d-09f378f7de48")
+                loadCGCampaign("95a73837-ab21-493d-85f6-d7a6ac3ec5ff")
               }}>
               <Image
                 source={{ uri: "https://assets.customerglu.com/demo/nudges/banner-2.png" }} // Replace with your image URL

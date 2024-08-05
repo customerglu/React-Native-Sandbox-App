@@ -1,10 +1,14 @@
-import { RegisterDevice, loadCampaignById, SetCurrentClassName } from '@customerglu/react-native-customerglu';
+import { RegisterDevice, loadCampaignById, SetCurrentClassName, enableAnalytic } from '@customerglu/react-native-customerglu';
 
 
+import messaging from '@react-native-firebase/messaging';
 
 export const registerUser =  async (userId) =>{
-    let userData = {
-        'userId': userId
+    const token = await messaging().getToken();
+    console.log("getToken", token)
+        let userData = {
+        'userId': userId,
+        'firebaseToken': token
         }
     var ok = await RegisterDevice(userData);
     if (ok == true) {
@@ -24,9 +28,14 @@ export const setCGScreenName = (screenName) =>{
     SetCurrentClassName(screenName)
 }
 
+export const enableCGAnalytic = () =>{
+    enableAnalytic(true)
+}
+
 
 module.exports = {
     registerUser,
     loadCGCampaign,
-    setCGScreenName
+    setCGScreenName,
+    enableCGAnalytic
 }

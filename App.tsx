@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
+
 import { Image,  NativeModules,
   NativeEventEmitter } from "react-native";
 import  { useContext, useState, useEffect } from "react";
@@ -35,44 +36,30 @@ import {
 import { loadCampaignById } from '@customerglu/react-native-customerglu';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Home from "./src/screen/Home";
 import ProductDetailsScreen from "./src/screen/ProductDetailsScreen";
 import HomeScreen from './src/screen/HomeScreen';
+import RegisterScreen from './src/RegisterScreen';
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
+import { DisplayCGNotification,DisplayCGBackgroundNotification,handleDeepLinkUri } from '@customerglu/react-native-customerglu';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+import {PermissionsAndroid} from 'react-native';
 
+import messaging from '@react-native-firebase/messaging';
+async function requestUserPermission() {
+  const authStatus = await messaging().requestPermission();
+  const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+  if (enabled) {
+    console.log('Authorization status:', authStatus);
+  }
 }
 
 function App(): React.JSX.Element {
@@ -81,11 +68,52 @@ function App(): React.JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+ 
 
   useEffect(() => {
+
+    requestUserPermission()
+    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+
+    messaging().onMessage(async remoteMessage => {
+      console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      var notification = JSON.parse(JSON.stringify(remoteMessage))
+      if (notification.data.glu_message_type) {
+        //ios notification open from forground
+        DisplayCGNotification(notification.data, true)
+
+    } else {
+        DisplayCGNotification(notification.data.data, true)
+    }
+    });
+
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log('Message handled in the background!----------', remoteMessage);
+      var notification = JSON.parse(JSON.stringify(remoteMessage))
+
+    //   if(Platform.OS==='android'){
+    //     DisplayCGBackgroundNotification(notification.data, true)
+    // }else{
+        DisplayCGNotification(notification.data, true)
+   // }
+    });
+
     // Call registerUser when the component mounts
     // pass your userId
-    registerUser("glutest-78");
+   // registerUser("glutest-78");
+
+
+ // const onRemoteNotification = (notification) => {
+//     const isClicked = notification.getData().userInteraction === 1;
+//     console.log("isClicked", notification.getData());
+//     console.log("isClicked", isClicked);
+//     if (isClicked) {
+//         console.log("isClicked", isClicked);
+//         // Navigate user to another screen
+//     } else {
+//         // Do something else with push notification
+//     }
+// };
 
     const { Rncustomerglu } = NativeModules;
         const RncustomergluManagerEmitter = new NativeEventEmitter(Rncustomerglu);
@@ -109,7 +137,7 @@ function App(): React.JSX.Element {
                 if (Platform.OS === 'ios') {
                     reminder = reminder.data
                 }
-                 console.log('CUSTOMERGLU_DEEPLINK_EVENT...12345',  reminder)
+                 console.log('CUSTOMERGLU_DEEPLINK_EVENT...Handle your Redirection logic',  reminder)
                 if(reminder && reminder.campaignId){
                 loadCampaignById(reminder.campaignId,)
                 }
@@ -176,10 +204,15 @@ function App(): React.JSX.Element {
 
   return (
     <NavigationContainer>
-    <Stack.Navigator initialRouteName={'Home'}>
+    <Stack.Navigator initialRouteName={'RegisterScreen'}>
         <Stack.Screen
             name="Home"
             component={HomeScreen}
+            options={{ title: 'SplashScreen', headerShown: false }}
+        />
+         <Stack.Screen
+            name="RegisterScreen"
+            component={RegisterScreen}
             options={{ title: 'SplashScreen', headerShown: false }}
         />
    
