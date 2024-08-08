@@ -18,9 +18,19 @@ export const registerUser =  async (userId) =>{
     }
 }
 
-export const loadCGCampaign =(campaignId) =>{
+export const loadCGCampaign =(campaignId) => {
 
-    loadCampaignById(campaignId) 
+    let nudgeConfigurationData = {
+        nudgeConfiguration:{
+             layout:'full-default',
+             opacity:'0.8',
+             closeOnDeepLink:true,
+             absoluteHeight:'50',
+             relativeHeight:'60'
+        },
+    };
+
+    loadCampaignById(campaignId,nudgeConfigurationData) 
 
 }
 

@@ -146,6 +146,7 @@ const HomeScreen = () => {
     );
   };
 
+
   return (
     <LinearGradient colors={["#FDF0F3", "#FFFBFC"]} style={styles.container}>
       {/* header */}
@@ -167,16 +168,7 @@ const HomeScreen = () => {
               {/* Full-width image */}
               <TouchableOpacity
               onPress={() => {
-                let nudgeConfigurationData = {
-                  nudgeConfiguration:{
-                       layout:'full-default',
-                       opacity:'0.8',
-                       closeOnDeepLink:true,
-                       absoluteHeight:'50',
-                       relativeHeight:'60'
-                  },
-              };
-                loadCGCampaign("95a73837-ab21-493d-85f6-d7a6ac3ec5ff",nudgeConfigurationData)
+                loadCGCampaign("95a73837-ab21-493d-85f6-d7a6ac3ec5ff")
               }}>
               <Image
                 source={{ uri: "https://assets.customerglu.com/demo/nudges/banner-2.png" }} // Replace with your image URL
