@@ -1002,7 +1002,7 @@ PODS:
   - React-Mapbuffer (0.74.4):
     - glog
     - React-debug
-  - react-native-customerglu (2.0.3):
+  - react-native-customerglu (2.0.3-1.0-beta):
     - CustomerGlu (= 3.0.3)
     - React-Core
   - react-native-safe-area-context (4.10.8):
@@ -1520,7 +1520,7 @@ SPEC CHECKSUMS:
   React-jsitracing: 1df8bacba61c49f30a488660fbc491221374b27b
   React-logger: fbfb50e2a2b1b46ee087f0a52739fadecc5e81a4
   React-Mapbuffer: a5eb0e1e19b423dcd52dedf46a63efe76c59883c
-  react-native-customerglu: 7562c46b3b5ba347ab58bf4868ad13671b1d52d4
+  react-native-customerglu: ea5f419f9ac7117f3c5adc4aa0711c4ee7593dec
   react-native-safe-area-context: b7daa1a8df36095a032dff095a1ea8963cb48371
   React-nativeconfig: 88b7dc2d4e0ddd3255793dbdda3ee2507b409a91
   React-NativeModulesApple: ee1cbcbdbbcb28d2a346e7415422778f32a4a3d4

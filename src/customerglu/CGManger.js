@@ -4,11 +4,10 @@ import { RegisterDevice, loadCampaignById, SetCurrentClassName, enableAnalytic }
 import messaging from '@react-native-firebase/messaging';
 
 export const registerUser =  async (userId) =>{
-    const token = await messaging().getToken();
-    console.log("getToken", token)
+  //  const token = await messaging().getToken();
+   // console.log("getToken", token)
         let userData = {
-        'userId': userId,
-        'firebaseToken': token
+        'userId': userId
         }
     var ok = await RegisterDevice(userData);
     if (ok == true) {

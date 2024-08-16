@@ -32,7 +32,7 @@ import {
     listenToDarkMode,
     enableDarkMode,configureLightLoaderURL,configureDarkLoaderURL,configureLightEmbedLoaderURL,configureDarkEmbedLoaderURL
 } from '@customerglu/react-native-customerglu';
-import messaging from '@react-native-firebase/messaging';
+// import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { Platform } from 'react-native';
@@ -125,8 +125,7 @@ const RegisterScreen = ({ navigation }) => {
 
     const handleSubmitButton = async () => {
 
-        const token = await messaging().getToken();
-        console.log("getToken", token)
+      
         console.log("myuserId", userid)
 
         // Send registration data in Object     

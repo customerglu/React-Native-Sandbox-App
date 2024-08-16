@@ -50,18 +50,18 @@ const Stack = createNativeStackNavigator();
 
 import {PermissionsAndroid} from 'react-native';
 
-import messaging from '@react-native-firebase/messaging';
+// import messaging from '@react-native-firebase/messaging';
 import ProfileScreen from './src/screen/AccountScreen';
-async function requestUserPermission() {
-  const authStatus = await messaging().requestPermission();
-  const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+// async function requestUserPermission() {
+//   const authStatus = await messaging().requestPermission();
+//   const enabled =
+//     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+//     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-  if (enabled) {
-    console.log('Authorization status:', authStatus);
-  }
-}
+//   if (enabled) {
+//     console.log('Authorization status:', authStatus);
+//   }
+// }
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -71,50 +71,50 @@ function App(): React.JSX.Element {
   };
  
 
-  useEffect(() => {
+//   useEffect(() => {
 
-    requestUserPermission()
-    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+//     requestUserPermission()
+//     PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
 
-    messaging().onMessage(async remoteMessage => {
-      console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
-      var notification = JSON.parse(JSON.stringify(remoteMessage))
-      if (notification.data.glu_message_type) {
-        //ios notification open from forground
-        DisplayCGNotification(notification.data, true)
+//     messaging().onMessage(async remoteMessage => {
+//       console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
+//       var notification = JSON.parse(JSON.stringify(remoteMessage))
+//       if (notification.data.glu_message_type) {
+//         //ios notification open from forground
+//         DisplayCGNotification(notification.data, true)
 
-    } else {
-        DisplayCGNotification(notification.data.data, true)
-    }
-    });
-
-    messaging().setBackgroundMessageHandler(async remoteMessage => {
-      console.log('Message handled in the background!----------', remoteMessage);
-      var notification = JSON.parse(JSON.stringify(remoteMessage))
-
-    //   if(Platform.OS==='android'){
-    //     DisplayCGBackgroundNotification(notification.data, true)
-    // }else{
-        DisplayCGNotification(notification.data, true)
-   // }
-    });
-
-    // Call registerUser when the component mounts
-    // pass your userId
-   // registerUser("glutest-78");
-
-
- // const onRemoteNotification = (notification) => {
-//     const isClicked = notification.getData().userInteraction === 1;
-//     console.log("isClicked", notification.getData());
-//     console.log("isClicked", isClicked);
-//     if (isClicked) {
-//         console.log("isClicked", isClicked);
-//         // Navigate user to another screen
 //     } else {
-//         // Do something else with push notification
+//         DisplayCGNotification(notification.data.data, true)
 //     }
-// };
+//     });
+
+//     messaging().setBackgroundMessageHandler(async remoteMessage => {
+//       console.log('Message handled in the background!----------', remoteMessage);
+//       var notification = JSON.parse(JSON.stringify(remoteMessage))
+
+//     //   if(Platform.OS==='android'){
+//     //     DisplayCGBackgroundNotification(notification.data, true)
+//     // }else{
+//         DisplayCGNotification(notification.data, true)
+//    // }
+//     });
+
+//     // Call registerUser when the component mounts
+//     // pass your userId
+//    // registerUser("glutest-78");
+
+
+//  // const onRemoteNotification = (notification) => {
+// //     const isClicked = notification.getData().userInteraction === 1;
+// //     console.log("isClicked", notification.getData());
+// //     console.log("isClicked", isClicked);
+// //     if (isClicked) {
+// //         console.log("isClicked", isClicked);
+// //         // Navigate user to another screen
+// //     } else {
+// //         // Do something else with push notification
+// //     }
+// // };
 
    
         
@@ -124,7 +124,7 @@ function App(): React.JSX.Element {
 
 
 
-  }, []);
+//   }, []);
 
 
   return (
